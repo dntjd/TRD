@@ -8,7 +8,7 @@ public class ObjectDetector : MonoBehaviour
     [SerializeField]
     private TowerSpawner    towerSpawner;
     [SerializeField]
-    private TowerDataViewer towerDataViewer;
+    //private TowerDataViewer towerDataViewer;
 
     private Camera          mainCamera;
     private Ray             ray;
@@ -16,6 +16,9 @@ public class ObjectDetector : MonoBehaviour
     private Transform       hitTransform = null;    // 마우스 픽킹으로 선택한 오브젝트 임시 저장
 
     private void Awake()
+    {
+
+    }
 
     private void Update()
     {
