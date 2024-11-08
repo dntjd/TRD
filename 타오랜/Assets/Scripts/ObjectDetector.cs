@@ -40,7 +40,7 @@ public class ObjectDetector : MonoBehaviour
                 hitTransform = hit.transform;
 
                 // 광선에 부딪힌 오브젝트의 태그가 "Tile"이면
-                if ( hit.transform,CompareTag("Tile") )
+                if ( hit.transform.CompareTag("Tile") )
                 {
                     // 타워를 생성하는 SpawnTower() 호출
                     towerSpawner.SpawnTower(hit.transform);
