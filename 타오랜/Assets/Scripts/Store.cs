@@ -8,6 +8,7 @@ public class Store : MonoBehaviour
     public float upgradeCost = 100f; // 업그레이드 가격
     public GameObject specialModulePrefab; // 특수 모듈 프리팹
     public GameManager gameManager; // 게임 매니저 참조
+    public float towerPlacementCost = 50f; // 타워 배치 비용
 
 
     // 상점에서 특수 모듈 구매
@@ -44,6 +45,23 @@ public class Store : MonoBehaviour
         else
         {
             Debug.Log("자원이 부족하여 타워 업그레이드를 할 수 없습니다.");
+        }
+    }
+
+    // 타워 배치 (플레이어가 타워를 배치하려고 할 때 호출)
+    public void PlaceTower(Vector2 position)
+    {
+        if (currentState == GameState.Playing && playerResources >= towerPlacementCost)
+        {
+            GameObject newTower = Instantiate(towerPrefab, position, Quaternion.identity, towerParent);
+            Tower towerScript = newTower.GetComponent<Tower>();
+            towers.Add(towerScript);
+            playerResources -= towerPlacementCost; // 자원 차감
+            Debug.Log("타워 배치 완료! 남은 자원: " + playerResources);
+        }
+        else if (playerResources < towerPlacementCost)
+        {
+            Debug.Log("자원이 부족합니다!");
         }
     }
 }

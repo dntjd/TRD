@@ -11,11 +11,10 @@ public class GameManager : MonoBehaviour
     public Stage stage; // 스테이지 관리
     public GameObject towerPrefab; // 타워 프리팹
     public Transform towerParent; // 타워를 배치할 부모 객체
-    public float towerPlacementCost = 50f; // 타워 배치 비용
 
     private float playerResources = 100f; // 플레이어 자원 (타워를 배치할 때 사용)
     private List<Tower> towers = new List<Tower>(); // 배치된 타워 리스트
-
+    
     void Start()
     {
         ChangeState(GameState.Lobby);
@@ -60,23 +59,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         ChangeState(GameState.GameOver);
-    }
-
-    // 타워 배치 (플레이어가 타워를 배치하려고 할 때 호출)
-    public void PlaceTower(Vector2 position)
-    {
-        if (currentState == GameState.Playing && playerResources >= towerPlacementCost)
-        {
-            GameObject newTower = Instantiate(towerPrefab, position, Quaternion.identity, towerParent);
-            Tower towerScript = newTower.GetComponent<Tower>();
-            towers.Add(towerScript);
-            playerResources -= towerPlacementCost; // 자원 차감
-            Debug.Log("타워 배치 완료! 남은 자원: " + playerResources);
-        }
-        else if (playerResources < towerPlacementCost)
-        {
-            Debug.Log("자원이 부족합니다!");
-        }
     }
 
     // 타워 업그레이드 (예시)
