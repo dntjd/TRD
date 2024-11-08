@@ -8,7 +8,7 @@ public class Stage : MonoBehaviour
     public GameObject enemyPrefab; // 적 프리팹
     public int waveCount = 5; // 총 웨이브 수
     public float spawnInterval = 2f; // 적 생성 간격
-
+    public float moduleRate = 5; //특수모듈 등장 확률
     private int currentWave = 0;
 
     // 웨이브 시작
