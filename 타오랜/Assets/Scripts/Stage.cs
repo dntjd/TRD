@@ -40,4 +40,6 @@ public class Stage : MonoBehaviour
         Enemy enemyScript = enemy.GetComponent<Enemy>();
         enemyScript.SetPath(enemyPath);
     }
+
+
 }
