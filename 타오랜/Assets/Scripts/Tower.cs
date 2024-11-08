@@ -4,15 +4,88 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float health = 100f; // 타워 체력
+    public float attackPower = 20f; // 타워 공격력
+    public float attackRange = 5f; // 공격 범위
+    public float attackInterval = 1f; // 공격 간격
+    private float attackTimer;
+
+    private Transform targetEnemy;
+
+    // 업그레이드 관련 변수
+    public float upgradedAttackPower = 40f; // 업그레이드 후 공격력
+    public float upgradedAttackRange = 7f; // 업그레이드 후 공격 범위
+    public float upgradedAttackInterval = 0.8f; // 업그레이드 후 공격 간격
+
+    public void Upgrade()
     {
-        
+        attackPower = upgradedAttackPower;
+        attackRange = upgradedAttackRange;
+        attackInterval = upgradedAttackInterval;
+        Debug.Log("타워가 업그레이드되었습니다!");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        attackTimer -= Time.deltaTime;
+
+        if (targetEnemy == null || Vector3.Distance(transform.position, targetEnemy.position) > attackRange)
+        {
+            FindNewTarget();
+        }
+
+        if (targetEnemy != null && attackTimer <= 0)
+        {
+            Attack();
+            attackTimer = attackInterval;
+        }
+    }
+
+    // 주변 적 탐색
+    void FindNewTarget()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        float closestDistance = attackRange;
+
+        foreach (Collider2D collider in hitColliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+                if (distance < closestDistance)
+                {
+                    targetEnemy = collider.transform;
+                    closestDistance = distance;
+                }
+            }
+        }
+    }
+
+    // 타워가 적을 공격
+    void Attack()
+    {
+        if (targetEnemy != null)
+        {
+            Enemy enemyScript = targetEnemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.TakeDamage(attackPower);
+            }
+        }
+    }
+
+    // 타워가 피해를 받음
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject); // 타워 파괴
     }
 }
