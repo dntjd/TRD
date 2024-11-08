@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Towertemplate : MonoBehaviour
+[CreateAssetMenu]
+public class Towertemplate : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject   towerPrefab;    // 타워 생성을 위한 프리팹
+    public Weapon[]     weapon;         // 레벨별 타워(무기) 정보
 
-    // Update is called once per frame
-    void Update()
+    [System.Serializable]
+    public struct Weapon
     {
-        
+        public Sprite   sprite; // 보여지는 타워 이미지 (UI)
+        public float    damage; // 공격력
+        public float    rate;   // 공격 속도
+        public float    range;  // 공격 범위
+        public int      cost;   // 필요 골드 (0레벨 : 건설, 1~레벨 : 업그레이드)
     }
 }
