@@ -112,7 +112,7 @@ public class Tower : MonoBehaviour
     private void Spawnprojectile()
     {
 
-        GameObject clone = Instantiate(projectPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject clone = Instantiate(projectPrefab, attackstart.position, Quaternion.identity);
         clone.GetComponent<projectile>().Setup(targetEnemy, attackPower);
 
     }
