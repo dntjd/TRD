@@ -7,10 +7,13 @@ public class TowerSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject towerPrefab;
+    
     [SerializeField]
     private PlayerGold playerGold;
     [SerializeField]
     private int towerBuildGold = 50;
+    [SerializeField]
+    private EnemySpawner enemySpawner;
 
     public void SpawnTower(Transform tileTransform) {
         if (towerBuildGold > playerGold.CurrentGold) {
