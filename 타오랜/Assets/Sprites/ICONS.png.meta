@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c7c4cc2164d95f4ab204bffebfd86ed
+guid: ffd9b7aa5446d034aa49227546d0ef69
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tile_0
+      name: ICONS_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 37
-        width: 16
-        height: 16
+        x: 9
+        y: 73
+        width: 44
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5348826a008e684595faa4b9561946e
-      internalID: -736857364
+      spriteID: 26ee255f28f771e498578c806cacaefd
+      internalID: -1755842789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile_1
+      name: ICONS_1
       rect:
         serializedVersion: 2
-        x: 42
-        y: 37
-        width: 16
-        height: 16
+        x: 0
+        y: 9
+        width: 64
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,29 +171,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16bf0d5551279d047954fdf8a093d449
-      internalID: 1085813961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tile_2
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 5
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60df17b30d3714240b2fcf53f6e52891
-      internalID: -1450023855
+      spriteID: 9a18d984ef0f4114b9d300d14ebf2e41
+      internalID: -162559104
       vertices: []
       indices: 
       edges: []
@@ -209,9 +188,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Tile_0: -736857364
-      Tile_1: 1085813961
-      Tile_2: -1450023855
+      ICONS_0: -1755842789
+      ICONS_1: -162559104
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
