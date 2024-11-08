@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float health = 30f; // 적의 체력
+    [SerializeField]
+    private float health = 30f; // 적의 체력
+    private float currenthealth;
+    
     public float speed = 2f; // 이동 속도
     
     private int         wayPointCount;      //이동 경로 개수
     private Transform[] wayPoints;          //이동할 경로 정보
     private int         currentIndex = 0;   //현재 목표지점 인덱스
     private Movement2D movement2D;
+    private EnemySpawner enemySpawner;
+    private SpriteRenderer spriteRenderer;
 
-    public void Setup(Transform[] wayPoints)
+    public void Awake()
+    {
+        currenthealth = health;
+       Enemy enemy = GetComponent<Enemy>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void Setup(EnemySpawner enemySpawner,Transform[] wayPoints)
     {
         movement2D = GetComponent<Movement2D>();
+        this.enemySpawner = enemySpawner;
 
         //적 이동 경로 wayPoints 정보 설정
         wayPointCount = wayPoints.Length;
@@ -70,8 +82,8 @@ public class Enemy : MonoBehaviour
     // 피해를 입는 메서드
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        currenthealth -= damage;
+        if (currenthealth <= 0)
         {
             Die();
         }
@@ -80,7 +92,7 @@ public class Enemy : MonoBehaviour
     // 적이 죽었을 때 처리
     private void Die()
     {
-        Destroy(gameObject);
+        enemySpawner.DieEnemy(this);
         // 적이 죽을 때 보상 처리 등을 추가 가능
     }
 }

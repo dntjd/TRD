@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerGold : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private int currentGold = 100;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public int CurrentGold { 
+    set=> currentGold = Mathf.Max(0, value);
+        get => currentGold;
     }
 }

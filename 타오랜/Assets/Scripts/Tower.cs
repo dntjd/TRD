@@ -23,7 +23,7 @@ public class Tower : MonoBehaviour
     private WeaponState weaponState = WeaponState.SearchTarget;
     private Transform targetEnemy = null;
     //private PlayerGold playerGold;
-    //private EnemySpawner enemySpawner;
+    private EnemySpawner enemySpawner;
 
     //private Sprite TowerSprite => towerTemplete.weapon[Upgrade].sprite;
     //public float Damage => towerTemplete.weapon[Upgrade].damage;
@@ -69,14 +69,14 @@ public class Tower : MonoBehaviour
         while (true)
         {
             float closetDistSqr = Mathf.Infinity;//검색범위 최대로 설정
-            for (int i = 0; i < enemySpawner.EnemyList.Count; i++)
+            for (int i = 0; i < enemySpawner.enemyList.Count; i++)
             {
-                float distance = Vector3.Distance(enemySpawner.EnemyList[i].transform.position, transform.position);
+                float distance = Vector3.Distance(enemySpawner.enemyList[i].transform.position, transform.position);
                 //검사 중인 적의 거리가 공격범위 안, 현재까지 검사한 적보다 거리가 가까운 경우
                 if (distance <= attackRange && distance <= closetDistSqr)
                 {
                     closetDistSqr = distance;
-                    targetEnemy = enemySpawner.EnemyList[i].transform;
+                    targetEnemy = enemySpawner.enemyList[i].transform;
                 }
 
             }
