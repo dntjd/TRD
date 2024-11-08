@@ -16,17 +16,20 @@ public class TowerSpawner : MonoBehaviour
     private EnemySpawner enemySpawner;
 
     public void SpawnTower(Transform tileTransform) {
+ 
+
         if (towerBuildGold > playerGold.CurrentGold) {
             return;
         }
-        Tile tile = tileTransform.GetComponent<tile>();
+        Tile tile = tileTransform.GetComponent<Tile>();
 
         if (tile.IsBuildTower == true) {
             return;
         }
         tile.IsBuildTower = true;
         playerGold.CurrentGold -= towerBuildGold;
-        GameObject clone = Instantiate(towerPrefab, tileTransform.position,Quaternion.identity);
+        Vector3 position = tileTransform.position + Vector3.back;
+        GameObject clone = Instantiate(towerPrefab,position,Quaternion.identity);
         clone.GetComponent<Tower>().Setup(enemySpawner);
     }
 }

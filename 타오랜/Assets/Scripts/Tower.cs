@@ -22,13 +22,13 @@ public class Tower : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private WeaponState weaponState = WeaponState.SearchTarget;
     private Transform targetEnemy = null;
-    //private PlayerGold playerGold;
+    private PlayerGold playerGold;
     private EnemySpawner enemySpawner;
 
     //private Sprite TowerSprite => towerTemplete.weapon[Upgrade].sprite;
-    //public float Damage => towerTemplete.weapon[Upgrade].damage;
-    //public float Rate => towerTemplete.weapon[Upgrade].Rate;
-    //public float Range => towerTemplete.weapon[Upgrade].Range;
+    public float Damage => attackPower;
+    public float Rate => attackRate;
+    public float Range => attackRange;
 
 
 

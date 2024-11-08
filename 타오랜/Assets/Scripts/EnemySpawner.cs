@@ -11,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
     private float       spawnTime;      //적 생성 주기
     [SerializeField]
     private Transform[] wayPoints;      //현재 스테이지의 이동 경로
+    [SerializeField]
+    private PlayerHP playerHP;
     public List<Enemy> enemyList;
 
     private List<Enemy> EnemyList => enemyList;
@@ -36,9 +38,16 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void DieEnemy(Enemy enemy)
-    {
+    public void DestroyEnemy(EnemyDestroyType type, Enemy enemy) { 
+
+        if(type == EnemyDestroyType.Arrive)
+            {
+            playerHP.Takedamage(10);
+        }
         enemyList.Remove(enemy);
+
         Destroy(enemy.gameObject);
+    
     }
+
 }
