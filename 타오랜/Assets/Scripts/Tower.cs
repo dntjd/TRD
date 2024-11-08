@@ -1,81 +1,140 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum WeaponState { SearchTarget = 0, AttackToTarget }
 
 public class Tower : MonoBehaviour
 {
-    public float health = 100f; // 타워 체력
-    public float attackPower = 10f; // 타워 공격력
-    public float attackRange = 5f; // 공격 범위
-    public float attackInterval = 1f; // 공격 간격
-    private float attackTimer;
+    [SerializeField]
+    private GameObject projectPrefab;//발사체 모양
+    [SerializeField]
+    private Transform attackstart;//발사체 발사 위치
+    [SerializeField]
+    private int attackPower = 10; // 타워 공격력
+    [SerializeField]
+    private float attackRate = 1.0f;// 공격 속도
+    [SerializeField]
+    private float attackRange = 1.5f; // 공격 범위
 
-    private Transform targetEnemy;
+    private SpriteRenderer spriteRenderer;
+    private WeaponState weaponState = WeaponState.SearchTarget;
+    private Transform targetEnemy = null;
+    //private PlayerGold playerGold;
+    //private EnemySpawner enemySpawner;
 
-    // 업그레이드 관련 변수
-    public float upgradedAttackPower = attackPower + 5f; // 업그레이드 후 공격력
-    public float upgradedAttackRange = 7f; // 업그레이드 후 공격 범위
-    public float upgradedAttackInterval = attackInterval * 0.8f; // 업그레이드 후 공격 간격
+    //private Sprite TowerSprite => towerTemplete.weapon[Upgrade].sprite;
+    //public float Damage => towerTemplete.weapon[Upgrade].damage;
+    //public float Rate => towerTemplete.weapon[Upgrade].Rate;
+    //public float Range => towerTemplete.weapon[Upgrade].Range;
 
-    public void Upgrade()
+
+
+    public void Setup(EnemySpawner enemySpawner)
     {
-        attackPower = upgradedAttackPower;
-        attackRange = upgradedAttackRange;
-        attackInterval = upgradedAttackInterval;
-        Debug.Log("타워가 업그레이드되었습니다!");
+        //spriteRenderer = GetComponent<SpriteRenderer>();
+        this.enemySpawner = enemySpawner;
+        //this.playerGold = playerGold;
+
+        ChangeState(WeaponState.SearchTarget);
+
     }
 
-    void Update()
+    public void ChangeState(WeaponState newState)
     {
-        attackTimer -= Time.deltaTime;
-
-        if (targetEnemy == null || Vector3.Distance(transform.position, targetEnemy.position) > attackRange)
-        {
-            FindNewTarget();
-        }
-
-        if (targetEnemy != null && attackTimer <= 0)
-        {
-            Attack();
-            attackTimer = attackInterval;
-        }
+        StopCoroutine(weaponState.ToString());
+        weaponState = newState;
+        StartCoroutine(weaponState.ToString());
     }
-
-    // 주변 적 탐색
-    void FindNewTarget()
-    {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
-        float closestDistance = attackRange;
-
-        foreach (Collider2D collider in hitColliders)
-        {
-            if (collider.CompareTag("Enemy"))
-            {
-                float distance = Vector3.Distance(transform.position, collider.transform.position);
-                if (distance < closestDistance)
-                {
-                    targetEnemy = collider.transform;
-                    closestDistance = distance;
-                }
-            }
-        }
-    }
-
-    // 타워가 적을 공격
-    void Attack()
+    private void Update()
     {
         if (targetEnemy != null)
         {
-            Enemy enemyScript = targetEnemy.GetComponent<Enemy>();
-            if (enemyScript != null)
+            RotateToTarget();
+        }
+    }
+    private void RotateToTarget()
+    {
+        float dx = targetEnemy.position.x - transform.position.x;
+        float dy = targetEnemy.position.y - transform.position.y;
+
+        float degree = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, degree);
+    }
+
+    private IEnumerator SearchTarget()
+    {
+        while (true)
+        {
+            float closetDistSqr = Mathf.Infinity;//검색범위 최대로 설정
+            for (int i = 0; i < enemySpawner.EnemyList.Count; i++)
             {
-                enemyScript.TakeDamage(attackPower);
+                float distance = Vector3.Distance(enemySpawner.EnemyList[i].transform.position, transform.position);
+                //검사 중인 적의 거리가 공격범위 안, 현재까지 검사한 적보다 거리가 가까운 경우
+                if (distance <= attackRange && distance <= closetDistSqr)
+                {
+                    closetDistSqr = distance;
+                    targetEnemy = enemySpawner.EnemyList[i].transform;
+                }
+
             }
+
         }
     }
 
-    void Die()
+    private IEnumerator AttackToTarget()
     {
-        Destroy(gameObject); // 타워 파괴
+        while (true)
+        {
+            if (targetEnemy == null)//타겟 존재 검사
+            {
+                ChangeState(WeaponState.SearchTarget);
+                break;
+            }
+
+
+            float distance = Vector3.Distance(targetEnemy.position, transform.position);
+            if (distance > attackRange)
+            {
+                targetEnemy = null;
+                ChangeState(WeaponState.SearchTarget);
+                break;
+            }
+            yield return new WaitForSeconds(attackRate);
+
+            Spawnprojectile();
+
+        }
     }
+
+    private void Spawnprojectile()
+    {
+
+        Instantiate(projectPrefab, spawnPoint.position, Quaternion.identity);
+
+    }
+
+
+
+
+
+
+
+
+    /*public bool Upgrade()
+    {
+        if (playerGold.CurrentGold < towerTemplete.weapon[Upgrade].cost)
+            attackPower = upgradedAttackPower;
+        attackRange = upgradedAttackRange;
+        attackInterval = upgradedAttackInterval;
+        Debug.Log("타워가 업그레이드되었습니다!");
+    }*/
+
+
+
+  
+
 }
+
