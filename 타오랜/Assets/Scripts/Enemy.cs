@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float health = 100f; // 적의 체력
+    public float health = 30f; // 적의 체력
     public float speed = 2f; // 이동 속도
     
     private int         wayPointCount;      //이동 경로 개수
