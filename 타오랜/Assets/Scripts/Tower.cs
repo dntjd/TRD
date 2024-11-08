@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     public float health = 100f; // 타워 체력
-    public float attackPower = 20f; // 타워 공격력
+    public float attackPower = 10f; // 타워 공격력
     public float attackRange = 5f; // 공격 범위
     public float attackInterval = 1f; // 공격 간격
     private float attackTimer;
@@ -13,9 +13,9 @@ public class Tower : MonoBehaviour
     private Transform targetEnemy;
 
     // 업그레이드 관련 변수
-    public float upgradedAttackPower = 40f; // 업그레이드 후 공격력
+    public float upgradedAttackPower = attackPower + 5f; // 업그레이드 후 공격력
     public float upgradedAttackRange = 7f; // 업그레이드 후 공격 범위
-    public float upgradedAttackInterval = 0.8f; // 업그레이드 후 공격 간격
+    public float upgradedAttackInterval = attackInterval * 0.8f; // 업그레이드 후 공격 간격
 
     public void Upgrade()
     {
@@ -71,16 +71,6 @@ public class Tower : MonoBehaviour
             {
                 enemyScript.TakeDamage(attackPower);
             }
-        }
-    }
-
-    // 타워가 피해를 받음
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
-        {
-            Die();
         }
     }
 

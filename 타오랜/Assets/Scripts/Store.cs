@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
-    public float moduleCost = 50f; // 모듈 가격
+    public float moduleRateCost = 200f; // 특수 모듈 등장 확률 가격
     public float upgradeCost = 100f; // 업그레이드 가격
     public GameObject specialModulePrefab; // 특수 모듈 프리팹
     public GameManager gameManager; // 게임 매니저 참조
 
+
     // 상점에서 특수 모듈 구매
     public void PurchaseModule()
     {
-        if (gameManager.playerResources >= moduleCost)
+        if (gameManager.playerResources >= moduleRateCost)
         {
-            gameManager.playerResources -= moduleCost;
-            GameObject newModule = Instantiate(specialModulePrefab, transform.position, Quaternion.identity);
-            SpecialModule module = newModule.GetComponent<SpecialModule>();
-
-            // 예시: 특수 모듈을 타워에 장착
-            if (gameManager.towers.Count > 0) // 타워가 하나 이상 있을 때만
+            if (Stage.moduleRate < 15)
             {
-                Tower tower = gameManager.towers[0]; // 첫 번째 타워에 장착
-                module.transform.SetParent(tower.transform);
-                Debug.Log("모듈이 타워에 장착되었습니다!");
+                gameManager.playerResources -= moduleRateCost;
+                Stage.moduleRate += 1;
+                Debug.Log("특수 모듈 등장 확률이 상승했습니다.");
+            }
+            else
+            {
+                Debug.Log("이미 최대 확률입니다.");
             }
         }
         else
         {
-            Debug.Log("자원이 부족하여 모듈을 구매할 수 없습니다.");
+            Debug.Log("자원이 부족합니다.");
         }
     }
 
