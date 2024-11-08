@@ -36,7 +36,7 @@ public class projectile : MonoBehaviour
         if (collision.transform != target) return;
 
         //collision.GetComponent<Enemy>().Ondie();
-        collision.GetComponent<EnemyHP>().Takedamage(damage);
+        collision.GetComponent<Enemy>().TakeDamage(damage);
         Destroy(gameObject);
 
     }

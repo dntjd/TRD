@@ -17,7 +17,7 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private float attackRate = 1.0f;// 공격 속도
     [SerializeField]
-    private float attackRange = 1.5f; // 공격 범위
+    private float attackRange = 2.5f; // 공격 범위
 
     private SpriteRenderer spriteRenderer;
     private WeaponState weaponState = WeaponState.SearchTarget;
@@ -112,7 +112,8 @@ public class Tower : MonoBehaviour
     private void Spawnprojectile()
     {
 
-        Instantiate(projectPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject clone = Instantiate(projectPrefab, spawnPoint.position, Quaternion.identity);
+        clone.GetComponent<projectile>().Setup(targetEnemy, attackPower);
 
     }
 
