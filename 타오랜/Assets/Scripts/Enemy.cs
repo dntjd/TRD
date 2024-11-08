@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyDestroyType { kill = 0, Arrive }
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float health = 30f; // 적의 체력
     private float currenthealth;
     
-    public float speed = 2f; // 이동 속도
-    
+    public float speed = 2f; // 이동 속도   
+
+
+    private bool isDie = false;
     private int         wayPointCount;      //이동 경로 개수
     private Transform[] wayPoints;          //이동할 경로 정보
     private int         currentIndex = 0;   //현재 목표지점 인덱스
@@ -82,17 +86,20 @@ public class Enemy : MonoBehaviour
     // 피해를 입는 메서드
     public void TakeDamage(float damage)
     {
+        if (isDie == true) return;
+
         currenthealth -= damage;
         if (currenthealth <= 0)
         {
-            Die();
+            isDie = true;
+            Die(EnemyDestroyType.kill);
         }
     }
 
     // 적이 죽었을 때 처리
-    private void Die()
+    private void Die(EnemyDestroyType type)
     {
-        enemySpawner.DieEnemy(this);
+        enemySpawner.DestroyEnemy(type,this);
         // 적이 죽을 때 보상 처리 등을 추가 가능
     }
 }
