@@ -11,16 +11,15 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private float range = 2.5f;//공격 범위
     [SerializeField]
-
     private Transform target;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Start()//게임 실행 시 적 감지, 공격 준비
     {
         InvokeRepeating("FindTarget", 0f, 0.5f);
         InvokeRepeating("Attack", 0f, 1f / attackrate);
     }
-    private void Attack()
+    private void Attack()//타워의 공격
     {
         if (target != null)
         {
@@ -36,13 +35,13 @@ public class Tower : MonoBehaviour
     private void FindTarget()
     {
         // 범위 내의 모든 적 탐색
-        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, range);
+        Collider2D[] RangeEnemy = Physics2D.OverlapCircleAll(transform.position, range);
 
         // 가장 가까운 적 찾기
         float closestDistance = Mathf.Infinity;
         Transform closestEnemy = null;
 
-        foreach (Collider2D collider in enemiesInRange)
+        foreach (Collider2D collider in RangeEnemy)
         {
             Enemy enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
@@ -60,4 +59,24 @@ public class Tower : MonoBehaviour
         target = closestEnemy;
 
     }
+    public void IncreaseAttack(float multiplier)
+    {
+        attack *= multiplier;
+    }
+
+    public void IncreaseAttackRate(float multiplier)
+    {
+        attackrate *= multiplier;
+        CancelInvoke("Attack");
+        InvokeRepeating("Attack", 0f, 1f / attackrate);
+    }
+
+    public void DecreaseAttackRate(float multiplier)
+    {
+        attackrate *= multiplier;
+        CancelInvoke("Attack");
+        InvokeRepeating("Attack", 0f, 1f / attackrate);
+    }
+
+
 }
