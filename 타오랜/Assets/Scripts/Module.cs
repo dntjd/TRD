@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Module : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum ModuleType
     {
-        
+        PowerUp,
+        AttackSpeedUp
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] 
+    private ModuleType moduleType;
+
+
+    public void ApplyModule(Tower tower)
     {
-        
+        switch (moduleType)
+        {
+            case ModuleType.PowerUp:
+                tower.IncreaseAttack(3f);
+                tower.DecreaseAttackRate(0.5f);
+                break;
+
+            case ModuleType.AttackSpeedUp:
+                tower.IncreaseAttackRate(2f);
+                break;
+        }
     }
 }
