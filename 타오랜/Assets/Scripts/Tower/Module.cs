@@ -20,7 +20,7 @@ public class Module : MonoBehaviour
             case ModuleType.PowerUp:
                 if (tower.CanApplyPowerUpModule())
                 {
-                    tower.ApplyPowerUpModule();
+                    tower.ApplyPowerUpModule(5);
                 }
                 else
                 {
@@ -31,7 +31,7 @@ public class Module : MonoBehaviour
             case ModuleType.AttackSpeedUp:
                 if (tower.CanApplyAttackSpeedUpModule())
                 {
-                    tower.ApplyAttackSpeedUpModule();
+                    tower.ApplyAttackSpeedUpModule(-0.2f);
                 }
                 else
                 {
