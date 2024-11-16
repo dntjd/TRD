@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    void Start()
+    void Start()=>this.gameObject.SetActive(false); // 게임을 실행했을 때 상점창이 떠있지 않도록 하기 위함
     {
         
     }
-
     void Update()
     {
         
@@ -22,7 +21,7 @@ public class Purchase_Tower : MonoBehaviour
     public GameObject Tower;
     void Tower_Purachase()
     {
-        GameObject tower = (GameObject)Instantiate(Tower, new Vector3(), Quaternion.identity);   // Vector3의 ()안에 들어가는 게 좌표, identity자리가 개체의 각도
+        GameObject tower = (GameObject)Instantiate(Tower, new Vector2(), Quaternion.identity);   // Vector2의 ()안에 들어가는 게 좌표, identity자리가 개체의 각도
     }
 }
 
