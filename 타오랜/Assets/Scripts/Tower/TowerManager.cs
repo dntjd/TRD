@@ -7,6 +7,9 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private List<Tower> towers;
     [SerializeField] private Module powerUpModule;
     [SerializeField] private Module attackSpeedUpModule;
+    [SerializeField] private SpecialModule Penetrating;
+    [SerializeField] private SpecialModule Slow;
+    [SerializeField] private SpecialModule AoE;
     private Tower selectedTower; // 선택된 타워
 
     void Update()
