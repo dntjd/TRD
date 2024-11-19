@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameManeger : MonoBehaviour
 {
+    [SerializeField]
+    int reveal_resource;
+    protected int reveal_size;
+    [SerializeField]
+    protected int coin;
+
     // Start is called before the first frame update
     void Start()
     {
