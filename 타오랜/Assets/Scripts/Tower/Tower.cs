@@ -13,6 +13,8 @@ public class Tower : MonoBehaviour
     private float range = 2.5f; // 공격 범위
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private GameObject projectilePrefab;
 
     private int powerUpModuleCount = 0; // 공격력 모듈 개수
     private int attackSpeedUpModuleCount = 0; // 공격속도 모듈 개수
@@ -29,23 +31,26 @@ public class Tower : MonoBehaviour
         InvokeRepeating("Attack", 0f, 1f / baseAttackRate);
     }
 
+
     private void Attack()
     {
         if (target != null)
         {
-            if (currentSpecialModule != null)
+            Vector3 direction = (target.position - transform.position).normalized;
+
+            // 투사체 생성
+            GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+            if (currentSpecialModule != null && currentSpecialModule.ModuleType == SpecialModuleType.Penetrating)
             {
-                // 특수 모듈 효과 호출
-                currentSpecialModule.ApplyEffect(target, baseAttack);
+                // 관통 투사체 생성
+                projectile.Initialize(direction, baseAttack, true);
             }
             else
             {
-                // 일반 공격
-                Enemy enemy = target.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.TakeDamage(baseAttack);
-                }
+                // 일반 투사체 생성
+                projectile.Initialize(direction, baseAttack);
             }
         }
     }
@@ -74,7 +79,7 @@ public class Tower : MonoBehaviour
         target = closestEnemy;
     }
 
-    ppublic void ApplySpecialModule(SpecialModule specialModule)
+    public void ApplySpecialModule(SpecialModule specialModule)
     {
         if (currentSpecialModule != null)
         {

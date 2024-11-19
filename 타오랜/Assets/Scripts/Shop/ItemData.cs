@@ -16,4 +16,6 @@ public class ItemData : ScriptableObject
     private int price; // 아이템의 가격
     public int Price { get { return price; } }
     [SerializeField]
+    private int item_stat; // 아이템의 스텟 증가량
+    public int Item_Stat { get { return item_stat; } }
 }
