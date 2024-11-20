@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointManager : MonoBehaviour
+public class Waypoint : MonoBehaviour
 {
-    public static WaypointManager Instance; // 싱글턴 패턴
+    public static Waypoint Instance; // 싱글턴 패턴
 
     [SerializeField]
     private Transform[] waypoints; // 경로에 있는 모든 웨이포인트
