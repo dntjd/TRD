@@ -31,26 +31,43 @@ public class Tower : MonoBehaviour
         InvokeRepeating("Attack", 0f, 1f / baseAttackRate);
     }
 
-
     private void Attack()
     {
         if (target != null)
         {
-            Vector3 direction = (target.position - transform.position).normalized;
-
             // 투사체 생성
             GameObject projectileObject = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-            if (currentSpecialModule != null && currentSpecialModule.ModuleType == SpecialModuleType.Penetrating)
+            if (currentSpecialModule != null)
             {
-                // 관통 투사체 생성
-                projectile.Initialize(direction, baseAttack, true);
+                switch (currentSpecialModule.ModuleType)
+                {
+                    case SpecialModuleType.Penetrating:
+                        // 관통 투사체 생성
+                        projectile.Initialize(target, baseAttack, true);
+                        break;
+
+                    case SpecialModuleType.AoE:
+                        // AoE 투사체 생성
+                        projectile.Initialize(target, baseAttack, false, true, false, 2.5f, 5f, 1f); // AoE 속성 포함
+                        break;
+
+                    case SpecialModuleType.Slow:
+                        // 둔화 포탑 투사체 생성
+                        projectile.Initialize(target, baseAttack, false, false, true); // 둔화 포탑 적용
+                        break;
+
+                    default:
+                        // 기본 투사체 생성
+                        projectile.Initialize(target, baseAttack);
+                        break;
+                }
             }
             else
             {
-                // 일반 투사체 생성
-                projectile.Initialize(direction, baseAttack);
+                // 일반 투사체
+                projectile.Initialize(target, baseAttack);
             }
         }
     }
@@ -78,7 +95,6 @@ public class Tower : MonoBehaviour
 
         target = closestEnemy;
     }
-
     public void ApplySpecialModule(SpecialModule specialModule)
     {
         if (currentSpecialModule != null)

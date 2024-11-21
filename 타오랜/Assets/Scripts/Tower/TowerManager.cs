@@ -69,4 +69,41 @@ public class TowerManager : MonoBehaviour
             Debug.LogWarning("타워가 선택되지 않았습니다!");
         }
     }
+
+    // 특수 모듈 적용
+    public void ApplyPenetratingModuleToSelectedTower()
+    {
+        if (selectedTower != null)
+        {
+            selectedTower.ApplySpecialModule(Penetrating); // 관통 모듈 적용
+        }
+        else
+        {
+            Debug.LogWarning("타워가 선택되지 않았습니다!");
+        }
+    }
+
+    public void ApplySlowModuleToSelectedTower()
+    {
+        if (selectedTower != null)
+        {
+            selectedTower.ApplySpecialModule(Slow); // 둔화 모듈 적용
+        }
+        else
+        {
+            Debug.LogWarning("타워가 선택되지 않았습니다!");
+        }
+    }
+
+    public void ApplyAoEModuleToSelectedTower()
+    {
+        if (selectedTower != null)
+        {
+            selectedTower.ApplySpecialModule(AoE); // AoE 모듈 적용
+        }
+        else
+        {
+            Debug.LogWarning("타워가 선택되지 않았습니다!");
+        }
+    }
 }

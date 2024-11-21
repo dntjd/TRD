@@ -32,6 +32,7 @@ public class SpecialModule : MonoBehaviour
 
     private void Awake()
     {
+        // 모듈 기본 상태 초기화
         CurrentAttack = baseAttack;
         CurrentAttackRate = baseAttackRate;
     }
@@ -48,42 +49,5 @@ public class SpecialModule : MonoBehaviour
         {
             Debug.LogWarning("특수 모듈 업그레이드 한도를 초과했습니다!");
         }
-    }
-
-    public void ApplyEffect(Transform target, int baseAttack)
-    {
-        switch (moduleType)
-        {
-            case SpecialModuleType.Penetrating:
-                PerformPenetratingAttack(target, baseAttack);
-                break;
-            case SpecialModuleType.Slow:
-                PerformSlowEffect(target, baseAttack);
-                break;
-            case SpecialModuleType.AoE:
-                PerformAoEAttack(target.position, baseAttack);
-                break;
-        }
-    }
-
-    private void PerformPenetratingAttack(Transform target, int attack)
-    {
-        Debug.Log("관통 공격 실행!");
-    }
-
-    private void PerformSlowEffect(Transform target, int attack)
-    {
-        Enemy enemy = target.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            Debug.Log("둔화 공격 실행!");
-            enemy.TakeDamage(attack);
-            enemy.ApplySlow(0.5f);
-        }
-    }
-
-    private void PerformAoEAttack(Vector3 position, int attack)
-    {
-        Debug.Log("장판 공격 실행!");
     }
 }
