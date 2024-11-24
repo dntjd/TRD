@@ -4,106 +4,192 @@ using UnityEngine;
 
 public class TowerManager : MonoBehaviour
 {
-    [SerializeField] private List<Tower> towers;
-    [SerializeField] private Module powerUpModule;
-    [SerializeField] private Module attackSpeedUpModule;
-    [SerializeField] private SpecialModule Penetrating;
-    [SerializeField] private SpecialModule Slow;
-    [SerializeField] private SpecialModule AoE;
-    private Tower selectedTower; // 선택된 타워
+    [SerializeField]
+    private GameObject towerPrefab; // 타워 프리팹
+    [SerializeField]
+    private LayerMask buildableLayer; // 타일 레이어
+    [SerializeField]
+    private Camera mainCamera; // 메인 카메라
 
-    void Update()
+    [Header("Modules")]
+    [SerializeField]
+    private Module powerUpModule; // 공격력 모듈
+    [SerializeField]
+    private Module attackSpeedUpModule; // 공격속도 모듈
+    [SerializeField]
+    private SpecialModule penetratingModule; // 관통 모듈
+    [SerializeField]
+    private SpecialModule slowModule; // 둔화 모듈
+    [SerializeField]
+    private SpecialModule aoeModule; // 장판 모듈
+
+    private GameObject selectedModuleIcon; // 현재 선택된 모듈 아이콘
+    private string selectedModuleType; // 현재 선택된 모듈의 타입 (공격력, 공격속도, 관통 등)
+
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
+        HandleMouseInput();
+    }
+
+    private void HandleMouseInput()
+    {
+        // 마우스 우클릭: 타워 배치
+        if (Input.GetMouseButtonDown(1))
         {
-            SelectTowerUnderMouse();
+            PlaceTower();
+        }
+
+        // 마우스 좌클릭: 모듈 선택 또는 적용
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleModuleSelectionOrApplication();
         }
     }
 
-    void SelectTowerUnderMouse()
+    private void PlaceTower()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Collider2D hit = Physics2D.OverlapPoint(mousePosition); // 마우스 위치에서 충돌된 타워 찾기
+        Vector3 mousePosition = GetMouseWorldPosition();
+        Collider2D tileCollider = Physics2D.OverlapPoint(mousePosition, buildableLayer);
 
-        if (hit != null && hit.GetComponent<Tower>() != null)
+        if (tileCollider != null)
         {
-            selectedTower = hit.GetComponent<Tower>();
-            Debug.Log($"[선택된 타워] {selectedTower.name}");
+            Instantiate(towerPrefab, tileCollider.transform.position, Quaternion.identity);
+            Debug.Log("타워가 배치되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("배치 가능 영역이 아닙니다!");
         }
     }
 
-    public void ApplyPowerUpModuleToSelectedTower()
+    private void HandleModuleSelectionOrApplication()
     {
-        if (selectedTower != null)
+        Vector3 mousePosition = GetMouseWorldPosition();
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null)
         {
-            if (selectedTower.CanApplyPowerUpModule())
+            GameObject clickedObject = hit.collider.gameObject;
+
+            // 모듈 아이콘을 클릭한 경우
+            if (clickedObject.CompareTag("ModuleIcon"))
             {
-                powerUpModule.ApplyModule(selectedTower);
+                SelectModule(clickedObject);
             }
-            else
+            // 타워를 클릭한 경우
+            else if (clickedObject.CompareTag("Tower"))
             {
-                Debug.LogWarning($"[타워 {selectedTower.name}] 공격력 모듈 최대치를 초과했습니다!");
+                Tower tower = clickedObject.GetComponent<Tower>();
+                if (tower != null)
+                {
+                    ApplySelectedModuleToTower(tower);
+                }
+                else
+                {
+                    Debug.LogWarning("타워 객체를 찾을 수 없습니다!");
+                }
             }
         }
-        else
+    }
+
+    private void SelectModule(GameObject moduleIcon)
+    {
+        // 모듈 타입을 아이콘 이름으로 구분
+        string moduleType = moduleIcon.name;
+
+        // 선택된 모듈 설정
+        switch (moduleType)
         {
-            Debug.LogWarning("타워가 선택되지 않았습니다!");
+            case "PowerUpModuleIcon":
+                selectedModuleIcon = moduleIcon;
+                selectedModuleType = "PowerUp";
+                Debug.Log("공격력 모듈이 선택되었습니다.");
+                break;
+            case "AttackSpeedUpModuleIcon":
+                selectedModuleIcon = moduleIcon;
+                selectedModuleType = "AttackSpeedUp";
+                Debug.Log("공격속도 모듈이 선택되었습니다.");
+                break;
+            case "PenetratingModuleIcon":
+                selectedModuleIcon = moduleIcon;
+                selectedModuleType = "Penetrating";
+                Debug.Log("관통 모듈이 선택되었습니다.");
+                break;
+            case "SlowModuleIcon":
+                selectedModuleIcon = moduleIcon;
+                selectedModuleType = "Slow";
+                Debug.Log("둔화 모듈이 선택되었습니다.");
+                break;
+            case "AoEModuleIcon":
+                selectedModuleIcon = moduleIcon;
+                selectedModuleType = "AoE";
+                Debug.Log("장판 모듈이 선택되었습니다.");
+                break;
+            default:
+                Debug.LogWarning("알 수 없는 모듈 아이콘입니다.");
+                break;
         }
     }
 
-    public void ApplyAttackSpeedUpModuleToSelectedTower()
+    private void ApplySelectedModuleToTower(Tower tower)
     {
-        if (selectedTower != null)
+        if (selectedModuleType == null)
         {
-            if (selectedTower.CanApplyAttackSpeedUpModule())
-            {
-                attackSpeedUpModule.ApplyModule(selectedTower);
-            }
-            else
-            {
-                Debug.LogWarning($"[타워 {selectedTower.name}] 공격속도 모듈 최대치를 초과했습니다!");
-            }
+            Debug.LogWarning("선택된 모듈이 없습니다!");
+            return;
         }
-        else
+
+        // 선택된 모듈 타입에 따라 타워에 모듈 적용
+        switch (selectedModuleType)
         {
-            Debug.LogWarning("타워가 선택되지 않았습니다!");
+            case "PowerUp":
+                if (tower.CanApplyPowerUpModule())
+                {
+                    powerUpModule.ApplyModule(tower);
+                    Debug.Log("공격력 모듈이 적용되었습니다.");
+                }
+                else
+                {
+                    Debug.LogWarning("공격력 모듈 최대치를 초과했습니다!");
+                }
+                break;
+            case "AttackSpeedUp":
+                if (tower.CanApplyAttackSpeedUpModule())
+                {
+                    attackSpeedUpModule.ApplyModule(tower);
+                    Debug.Log("공격속도 모듈이 적용되었습니다.");
+                }
+                else
+                {
+                    Debug.LogWarning("공격속도 모듈 최대치를 초과했습니다!");
+                }
+                break;
+            case "Penetrating":
+                tower.ApplySpecialModule(penetratingModule);
+                Debug.Log("관통 모듈이 적용되었습니다.");
+                break;
+            case "Slow":
+                tower.ApplySpecialModule(slowModule);
+                Debug.Log("둔화 모듈이 적용되었습니다.");
+                break;
+            case "AoE":
+                tower.ApplySpecialModule(aoeModule);
+                Debug.Log("장판 모듈이 적용되었습니다.");
+                break;
+            default:
+                Debug.LogWarning("알 수 없는 모듈 타입입니다.");
+                break;
         }
+
+        // 모듈 적용 후 선택 해제
+        selectedModuleIcon = null;
+        selectedModuleType = null;
     }
 
-    // 특수 모듈 적용
-    public void ApplyPenetratingModuleToSelectedTower()
+    private Vector3 GetMouseWorldPosition()
     {
-        if (selectedTower != null)
-        {
-            selectedTower.ApplySpecialModule(Penetrating); // 관통 모듈 적용
-        }
-        else
-        {
-            Debug.LogWarning("타워가 선택되지 않았습니다!");
-        }
-    }
-
-    public void ApplySlowModuleToSelectedTower()
-    {
-        if (selectedTower != null)
-        {
-            selectedTower.ApplySpecialModule(Slow); // 둔화 모듈 적용
-        }
-        else
-        {
-            Debug.LogWarning("타워가 선택되지 않았습니다!");
-        }
-    }
-
-    public void ApplyAoEModuleToSelectedTower()
-    {
-        if (selectedTower != null)
-        {
-            selectedTower.ApplySpecialModule(AoE); // AoE 모듈 적용
-        }
-        else
-        {
-            Debug.LogWarning("타워가 선택되지 않았습니다!");
-        }
+        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0; // Z 좌표 제거 (2D 환경)
+        return mousePosition;
     }
 }
