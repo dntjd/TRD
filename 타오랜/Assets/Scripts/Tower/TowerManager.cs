@@ -53,7 +53,13 @@ public class TowerManager : MonoBehaviour
 
         if (tileCollider != null)
         {
-            Instantiate(tower, tileCollider.transform.position, Quaternion.identity);
+            // 타일 위치를 기준으로 타워 배치
+            Vector3 towerPosition = tileCollider.transform.position;
+
+            // 타워의 Z 좌표를 1로 설정하여 타일맵 앞에 배치
+            towerPosition.z = 1f;
+
+            Instantiate(tower, towerPosition, Quaternion.identity);
             Debug.Log("타워가 배치되었습니다.");
         }
         else

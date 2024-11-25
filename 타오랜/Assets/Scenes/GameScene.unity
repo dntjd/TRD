@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 6472892043085490542, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6504954121189978240, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -579,6 +583,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
+--- !u!1 &856412987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5180623280682780164, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
+  m_PrefabInstance: {fileID: 856412986}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &887954752
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +824,8 @@ GameObject:
   - component: {fileID: 1708513329}
   - component: {fileID: 1708513331}
   - component: {fileID: 1708513330}
-  m_Layer: 0
+  - component: {fileID: 1708513332}
+  m_Layer: 3
   m_Name: TilemapTiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1724,6 +1734,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1708513332
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708513328}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1001 &1730269944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1915,10 +1961,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892b69655bbedd04e968857553fb51a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 0}
+  tower: {fileID: 856412987}
   buildableLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   mainCamera: {fileID: 1806870757}
   powerUpModule: {fileID: 0}
   attackSpeedUpModule: {fileID: 0}
