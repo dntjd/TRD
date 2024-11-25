@@ -10,7 +10,7 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private float baseAttackRate = 1f; // 기본 공격속도
     [SerializeField]
-    private float range = 2.5f; // 공격 범위
+    private float range = 25f; // 공격 범위
     [SerializeField]
     private Transform target;
     [SerializeField]
