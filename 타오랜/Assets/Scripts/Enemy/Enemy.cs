@@ -22,8 +22,12 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        InitializeStats();
-        //target = WaypointManager.Instance.GetWaypoint(waypointIndex); // 첫 번째 웨이포인트 설정
+        target = Waypoint.Instance.GetRandomStartWaypoint(); // 랜덤 시작 웨이포인트 설정
+        if (target == null)
+        {
+            Debug.LogError("시작 웨이포인트가 설정되지 않았습니다!");
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -51,13 +55,14 @@ public class Enemy : MonoBehaviour
     {
         if (target == null) return;
 
+        // 현재 위치에서 웨이포인트까지의 방향 계산
         Vector3 direction = (target.position - transform.position).normalized;
         transform.Translate(direction * MoveSpeed * Time.deltaTime, Space.World);
 
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
             waypointIndex++;
-            //target = WaypointManager.Instance.GetWaypoint(waypointIndex);
+            target = Waypoint.Instance.GetWaypoint(waypointIndex);
         }
     }
 

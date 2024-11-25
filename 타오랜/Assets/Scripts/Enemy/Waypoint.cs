@@ -8,6 +8,8 @@ public class Waypoint : MonoBehaviour
 
     [SerializeField]
     private Transform[] waypoints; // 경로에 있는 모든 웨이포인트
+    [SerializeField]
+    private Transform[] startWaypoints; // 시작 웨이포인트 배열
 
     private void Awake()
     {
@@ -24,14 +26,30 @@ public class Waypoint : MonoBehaviour
     /// <summary>
     /// 특정 인덱스의 웨이포인트 반환
     /// </summary>
-    /// <param name="index">웨이포인트 인덱스</param>
-    /// <returns>웨이포인트 위치</returns>
     public Transform GetWaypoint(int index)
     {
-        if (index < 0 || index >= waypoints.Length)
+        if (index >= 0 && index < waypoints.Length)
         {
-            return null; // 인덱스 초과 시 null 반환
+            return waypoints[index];
         }
-        return waypoints[index];
+        return null;
+    }
+
+    /// <summary>
+    /// 웨이포인트 총 개수 반환
+    /// </summary>
+    public int GetWaypointCount()
+    {
+        return waypoints.Length;
+    }
+
+    /// <summary>
+    /// 랜덤 시작 웨이포인트 반환
+    /// </summary>
+    public Transform GetRandomStartWaypoint()
+    {
+        if (startWaypoints.Length == 0) return null;
+        int randomIndex = Random.Range(0, startWaypoints.Length);
+        return startWaypoints[randomIndex];
     }
 }

@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab; // 스폰할 적 프리팹
     public Transform[] spawnPoints; // 적이 스폰될 위치들
-    public float spawnInterval = 2f; // 적 스폰 간격
+    public float spawnInterval = 2.0f; // 적 스폰 간격
     public int enemiesPerWave = 5; // 한 웨이브당 적 수
     public int currentWave = 1; // 현재 웨이브
 
