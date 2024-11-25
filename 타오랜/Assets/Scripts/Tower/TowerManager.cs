@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TowerManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class TowerManager : MonoBehaviour
     private LayerMask buildableLayer; // 타일 레이어
     [SerializeField]
     private Camera mainCamera; // 메인 카메라
+
+    [SerializeField]
+    private Tilemap tilemap;
 
     [Header("Modules")]
     [SerializeField]
@@ -48,23 +52,33 @@ public class TowerManager : MonoBehaviour
 
     private void PlaceTower()
     {
+        // 마우스 위치를 월드 좌표로 가져옵니다.
         Vector3 mousePosition = GetMouseWorldPosition();
-        Collider2D tileCollider = Physics2D.OverlapPoint(mousePosition, buildableLayer);
 
-        if (tileCollider != null)
+        // 타일맵을 통해 월드 좌표를 타일의 그리드 좌표로 변환합니다.
+        Vector3Int gridPosition = tilemap.WorldToCell(mousePosition);
+
+        // 그리드 좌표에 맞춰 타워가 정확히 중앙에 배치되도록 합니다.
+        Vector3 towerPosition = tilemap.GetCellCenterWorld(gridPosition);
+
+        // Z 좌표를 1로 설정하여 타워가 타일맵 위에 렌더링되도록 합니다.
+        towerPosition.x -= 3.8f;
+        towerPosition.y += 35.3f;
+        towerPosition.z = 1f;
+
+        // 해당 위치에 이미 타워가 존재하는지 확인
+        Collider2D existingTower = Physics2D.OverlapPoint(towerPosition, buildableLayer);
+
+        if (existingTower != null) // 이미 타워가 없다면
         {
-            // 타일 위치를 기준으로 타워 배치
-            Vector3 towerPosition = tileCollider.transform.position;
-
-            // 타워의 Z 좌표를 1로 설정하여 타일맵 앞에 배치
-            towerPosition.z = 1f;
-
+            // 타워를 해당 위치에 생성합니다.
             Instantiate(tower, towerPosition, Quaternion.identity);
             Debug.Log("타워가 배치되었습니다.");
         }
         else
         {
-            Debug.LogWarning("배치 가능 영역이 아닙니다!");
+            // 이미 타워가 존재하는 위치에서는 배치할 수 없습니다.
+            Debug.LogWarning("이미 타워가 존재하는 위치입니다!");
         }
     }
 

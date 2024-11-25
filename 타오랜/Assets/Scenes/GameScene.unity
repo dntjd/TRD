@@ -526,6 +526,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 557683028028977070, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5180623280682780164, guid: 1a46da9afb52c264382ad5cc0933bbee, type: 3}
       propertyPath: m_Name
       value: Tower
@@ -1966,6 +1970,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   mainCamera: {fileID: 1806870757}
+  tilemap: {fileID: 1708513331}
   powerUpModule: {fileID: 0}
   attackSpeedUpModule: {fileID: 0}
   penetratingModule: {fileID: 0}
