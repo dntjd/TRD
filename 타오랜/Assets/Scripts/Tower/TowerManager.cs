@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject towerPrefab; // 타워 프리팹
+    private GameObject tower; // 타워 프리팹
     [SerializeField]
     private LayerMask buildableLayer; // 타일 레이어
     [SerializeField]
@@ -53,7 +53,7 @@ public class TowerManager : MonoBehaviour
 
         if (tileCollider != null)
         {
-            Instantiate(towerPrefab, tileCollider.transform.position, Quaternion.identity);
+            Instantiate(tower, tileCollider.transform.position, Quaternion.identity);
             Debug.Log("타워가 배치되었습니다.");
         }
         else

@@ -344,7 +344,7 @@ Transform:
   m_GameObject: {fileID: 520057176}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 72.7, y: -27.6, z: 0}
+  m_LocalPosition: {x: 122.2, y: -48.8, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -657,7 +657,7 @@ Transform:
   m_GameObject: {fileID: 887954752}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.4, y: -26.8, z: 0}
+  m_LocalPosition: {x: -5.3, y: -37.5, z: 0}
   m_LocalScale: {x: 0.54875, y: 0.54875, z: 1.0975}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -831,8 +831,8 @@ Transform:
   m_GameObject: {fileID: 1708513328}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 37, y: -47.8, z: 0}
-  m_LocalScale: {x: 11.436347, y: 10, z: 0}
+  m_LocalPosition: {x: 36.2, y: -49.1, z: 0}
+  m_LocalScale: {x: 11.436347, y: 10.028, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 537833717}
@@ -1886,6 +1886,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1904472731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1904472733}
+  - component: {fileID: 1904472732}
+  m_Layer: 0
+  m_Name: TowerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1904472732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904472731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892b69655bbedd04e968857553fb51a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 0}
+  buildableLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  mainCamera: {fileID: 1806870757}
+  powerUpModule: {fileID: 0}
+  attackSpeedUpModule: {fileID: 0}
+  penetratingModule: {fileID: 0}
+  slowModule: {fileID: 0}
+  aoeModule: {fileID: 0}
+--- !u!4 &1904472733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904472731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.291054, y: -29.998032, z: -0.14392608}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1920106495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2096,3 +2150,4 @@ SceneRoots:
   - {fileID: 887954754}
   - {fileID: 856412986}
   - {fileID: 1449601622624401183}
+  - {fileID: 1904472733}
