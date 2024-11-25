@@ -7,9 +7,6 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     [SerializeField]
-    private int idx; // 아이템의 인덱스
-    public int IDX { get { return idx; } }
-    [SerializeField]
     private string item_name; // 아이템의 이름
     public string Item_Name { get { return item_name; } }
     [SerializeField]
