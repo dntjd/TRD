@@ -61,17 +61,19 @@ public class TowerManager : MonoBehaviour
         // 그리드 좌표에 맞춰 타워가 정확히 중앙에 배치되도록 합니다.
         Vector3 towerPosition = tilemap.GetCellCenterWorld(gridPosition);
 
-        // Z 좌표를 1로 설정하여 타워가 타일맵 위에 렌더링되도록 합니다.
-        towerPosition.x -= 3.8f;
-        towerPosition.y += 35.3f;
-        towerPosition.z = 1f;
 
         // 해당 위치에 이미 타워가 존재하는지 확인
         Collider2D existingTower = Physics2D.OverlapPoint(towerPosition, buildableLayer);
 
+        
+
         if (existingTower != null) // 이미 타워가 없다면
         {
             // 타워를 해당 위치에 생성합니다.
+            towerPosition.x += 32f;
+            towerPosition.y += 37.7f;
+            towerPosition.z = 1f;
+
             Instantiate(tower, towerPosition, Quaternion.identity);
             Debug.Log("타워가 배치되었습니다.");
         }
