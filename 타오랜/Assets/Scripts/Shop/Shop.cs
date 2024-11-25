@@ -31,7 +31,7 @@ public class Purchase_System : MonoBehaviour
             price = 100;
             if (gameManager.Coin  >= price)
             {
-                //gameManager.Coin -= price;
+                // gameManager.Coin -= price;
 
                 Debug.Log("아이템 구매 완료!");
             }
@@ -41,18 +41,30 @@ public class Purchase_System : MonoBehaviour
             }
         }
     }
-}
-
-
-
-// 업그레이드를 구매했을 때 데이터 상 존재하는 모든 타워의 능력치 향상
-public class Purchase_Upgrade : MonoBehaviour
-{
-    public int coin;
-    public int price;
-    public void purchase_upgrade()
+    // 업그레이드를 구매했을 때 데이터 상 존재하는 모든 타워의 능력치 향상
+    public class Purchase_Upgrade : MonoBehaviour
     {
+        private GameManager gameManager;
+        private void Start()
+        {
+            gameManager = GetComponent<GameManager>();
+        }
+
+        public int price = 50;
+        public void purchase_Upgrade()
+        {
+            if (gameManager.Coin >= price)
+            {
+                // gameManager.Coin -= price;
+
+                Debug.Log("아이템 구매 완료!");
+                price += 50;
+            }
+            else
+            {
+                Debug.Log("재화가 부족합니다!");
+            }
+        }
 
     }
-    
 }
