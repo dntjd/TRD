@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         InitializeStats();
-        target = WaypointManager.Instance.GetWaypoint(waypointIndex); // 첫 번째 웨이포인트 설정
+        //target = WaypointManager.Instance.GetWaypoint(waypointIndex); // 첫 번째 웨이포인트 설정
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(transform.position, target.position) < 0.1f)
         {
             waypointIndex++;
-            target = WaypointManager.Instance.GetWaypoint(waypointIndex);
+            //target = WaypointManager.Instance.GetWaypoint(waypointIndex);
         }
     }
 
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
-        GameManager.Instance.AddReward(reward); // 플레이어에게 보상 추가
+        //GameManager.Instance.AddReward(reward); // 플레이어에게 보상 추가
     }
 }
-}
+

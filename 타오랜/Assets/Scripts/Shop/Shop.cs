@@ -21,7 +21,7 @@ public class Purchase_System : MonoBehaviour
     {
         if (gameManager.Coin >= price)
         {
-            gameManager.coin -= price;
+            //gameManager.coin -= price;
             Debug.Log("아이템 구매 완료!");
         }
         else
@@ -41,10 +41,10 @@ public class Purchase_Tower : MonoBehaviour
     {
         gameManager = GetComponent<GameManager>();
     }
-    public int Purchase_System(int tower);
+    //public int Purchase_System(int tower);
     void Tower_Purachase()
     {
-        GameObject tower = (GameObject)Instantiate(Tower, new Vector2(), Quaternion.identity);   // Vector2의 ()안에 들어가는 게 좌표, identity자리가 개체의 각도
+        //GameObject tower = (GameObject)Instantiate(Tower, new Vector2(), Quaternion.identity);   // Vector2의 ()안에 들어가는 게 좌표, identity자리가 개체의 각도
     }
 }
 

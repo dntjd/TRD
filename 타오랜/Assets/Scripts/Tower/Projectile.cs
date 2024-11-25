@@ -96,7 +96,7 @@ public class Projectile : MonoBehaviour
                 if (isSlowing)
                 {
                     // 둔화 포탑이 공격한 경우
-                    enemy.SlowDown(0.5f); // 50% 속도 감소
+                    //enemy.SlowDown(0.5f); // 50% 속도 감소
                 }
             }
 
