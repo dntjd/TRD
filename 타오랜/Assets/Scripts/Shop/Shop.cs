@@ -31,7 +31,7 @@ public class Purchase_System : MonoBehaviour
             price = 100;
             if (gameManager.Coin  >= price)
             {
-                gameManager.Coin -= price;
+                //gameManager.Coin -= price;
 
                 Debug.Log("아이템 구매 완료!");
             }
